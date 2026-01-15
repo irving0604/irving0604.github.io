@@ -47,7 +47,7 @@ Summary of role:
 
 ## Example Image
 
-![Solo Leveling Background](assets/sololeveling.jpg)
+![Solo Leveling Background](assets/bg-v4.jpg)
 
 ---
 
