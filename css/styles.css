@@ -2151,7 +2151,7 @@ textarea.form-control-lg {
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
-  background-image: url("../assets/sololeveling.avif");
+  background-image: none;
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 16px 12px;
@@ -10825,6 +10825,6 @@ textarea.form-control-lg {
   }
 }
 body {
-  background: url("https://dummyimage.com/1920x1080/dee2e6/6c757d.jpg") no-repeat center center fixed;
+  background: url("../assets/sololeveling.avif") no-repeat center center fixed;
   background-size: cover;
 }
