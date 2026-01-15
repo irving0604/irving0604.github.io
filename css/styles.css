@@ -2151,7 +2151,7 @@ textarea.form-control-lg {
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
-  background-image: url("../assets/sololeveling.avif") no-repeat center center fixed;
+  background: url("../assets/sololeveling.jpg") no-repeat center center fixed;
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: cover;
