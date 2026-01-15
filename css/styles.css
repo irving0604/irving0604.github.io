@@ -10824,3 +10824,8 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+body {
+  background: url("../assets/sololeveling.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
