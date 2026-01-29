@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>COVID-19 Case Rates (2020)</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        #title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: black;
+        }
+        #subtitle {
+            position: absolute;
+            top: 55px;
+            left: 20px;
+            font-size: 14px;
+            color: black;
+        }
+        #legend {
+            position: absolute;
+            bottom: 30px;
+            right: 20px;
+            background: white;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            width: 150px;
+        }
+        .legend-row {
+            display: flex;
+            align-items: center;
+            margin: 4px 0;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border: 1px solid #999;
+        }
+        a {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <div id="title">COVID-19 Case Rates</div>
+    <div id="subtitle">United States, 2020 (cases per 1,000 residents)</div>
+
+    <div id="legend">
+        <strong>Case Rate</strong>
+        <div class="legend-row"><div class="legend-color" style="background:#f7fbff"></div>0–10</div>
+        <div class="legend-row"><div class="legend-color" style="background:#c6dbef"></div>10–25</div>
+        <div class="legend-row"><div class="legend-color" style="background:#6baed6"></div>25–50</div>
+        <div class="legend-row"><div class="legend-color" style="background:#2171b5"></div>50–100</div>
+        <div class="legend-row"><div class="legend-color" style="background:#08306b"></div>100+</div>
+        <p style="font-size:10px; text-align:right;">Source: NYT & ACS</p>
+    </div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiaXJ2aW5nMjA2IiwiYSI6ImNta3lxcWYzYTBhejYzZG9qeGE1NTZwNWYifQ.q3yHfLUJlNbuD54lTJD2rQ';
+
+        let map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v10',
+            center: [-96, 39],
+            zoom: 3
+        });
+
+        map.on('load', () => {
+            map.setProjection('albers');
+
+            map.addSource('covid-rates', {
+                type: 'geojson',
+                data: 'assets/us-covid-2020-rates.json'
+            });
+
+            map.addLayer({
+                id: 'covid-rates-layer',
+                type: 'fill',
+                source: 'covid-rates',
+                paint: {
+                    'fill-color': [
+                        'interpolate',
+                        ['linear'],
+                        ['get', 'rates'],
+                        0, '#f7fbff',
+                        10, '#c6dbef',
+                        25, '#6baed6',
+                        50, '#2171b5',
+                        100, '#08306b'
+                    ],
+                    'fill-opacity': 0.75,
+                    'fill-outline-color': '#ffffff'
+                }
+            });
+        });
+
+        map.on('click', 'covid-rates-layer', (event) => {
+            new mapboxgl.Popup()
+                .setLngLat(event.lngLat)
+                .setHTML(`<strong>COVID Rate:</strong> ${event.features[0].properties.rates}`)
+                .addTo(map);
+        });
+    </script>
+</body>
+</html>
